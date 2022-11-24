@@ -1,0 +1,57 @@
+##########################################
+#           Editable options             #
+##########################################
+
+# Compiler options
+CC = clang
+CFLAGS += -std=c17 -pedantic -Wall -Wno-deprecated-declarations -Os
+LDFLAGS += -pedantic -Wall -lm
+LDLIBS +=
+EXECUTABLE_NAME = nn
+
+# Folders
+SRC = src
+BIN = bin
+OBJ = obj
+
+RM = rm -r
+
+src = $(wildcard src/*.c)
+obj = $(patsubst $(SRC)/%,$(OBJ)/%,$(src:.c=.o))
+bin = $(BIN)/$(EXECUTABLE_NAME)
+
+all: options dirs $(bin)
+
+options:
+	@echo nn build options:
+	@echo "CFLAGS   = ${CFLAGS}"
+	@echo "LDFLAGS  = ${LDFLAGS}"
+	@echo "CC       = ${CC}"
+
+dirs:
+	@mkdir -p $(BIN)
+	@mkdir -p $(OBJ)
+
+paths:
+	@echo File paths:
+	@echo "Source files = $(src)"
+	@echo "Object files = $(obj)"
+	@echo "Binary file  = $(bin)"
+
+$(bin): $(obj)
+	@echo "Target:" $@
+	@echo "Object files:" $^
+	$(CC) -o $@ $^
+
+$(obj): $(src)
+	@echo "Object:" $@
+	@echo "Source files:" $^
+	cd $(BIN); $(CC) $(CFLAGS) -c $^
+
+# $(OBJ)/%.o: $(SRC)/%.c
+# 	$(CC) -c $^
+
+
+.PHONY: clean
+clean:
+	rm -f $(obj)
