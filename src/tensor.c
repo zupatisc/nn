@@ -24,6 +24,16 @@ tensor *tensor_init(unsigned int row, unsigned int col, double default_val) {
     return tensorp;
 }
 
+tensor *tensor_rinit(unsigned int row, unsigned int col) {
+    tensor *new_tensor = tensor_init(row, col, 0);
+
+    for (int i = 0; i < new_tensor->dim[0] * new_tensor->dim[1]; i++) {
+        tensor_set(new_tensor, i, frand());
+    }
+
+    return new_tensor;
+}
+
 int tensor_destroy(tensor *tensor) { //TODO: return useful info
     for(int i = 0; i < tensor->dim[0]; i++) {
         free(tensor->matrix[i]);
@@ -67,4 +77,37 @@ void tensor_print(tensor *tensor) {
         ir++;
     }
     puts("\n");
+}
+
+double tensor_iter(tensor *tensor, unsigned iter) {
+    int ir = 0, target = 0;
+    while (ir < tensor->dim[0]) { //Rows
+        int ic = 0;
+        while (ic < tensor->dim[1]) { //Columns
+            if (target == iter) {
+                return tensor->matrix[ir][ic];
+            }
+            ic++;
+            target++;
+        }
+        ir++;
+    }
+    return 0;
+}
+
+double tensor_set(tensor *tensor, unsigned iter, double val) {
+    int ir = 0, target = 0;
+    while (ir < tensor->dim[0]) { //Rows
+        int ic = 0;
+        while (ic < tensor->dim[1]) { //Columns
+            if (target == iter) {
+                tensor->matrix[ir][ic] = val;
+                return val;
+            }
+            ic++;
+            target++;
+        }
+        ir++;
+    }
+    return 0;
 }

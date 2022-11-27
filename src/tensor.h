@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define frand() (((double) rand() / (RAND_MAX + 1.0)) - 0.5)
+
 typedef struct tensor tensor;
 
 struct tensor {
@@ -31,4 +33,7 @@ void tensor_print(tensor *tensor);
 //np.max(a, b)
 //iterate through tensor and check for conidtion
 //iterate through tensor and apply operation
+//Iterate through tensor in a flat manner and return value of item
+double tensor_iter(tensor *tensor, unsigned iter);
+double tensor_set(tensor *tensor, unsigned iter, double val);
 #endif

@@ -44,6 +44,11 @@ int main() {
     tensor_matmul(target_tensor, first_tensor, second_tensor);
     tensor_print(target_tensor);
 
+    printf("tensor_iter Test: %f\n", tensor_iter(target_tensor, 3));
+
+    tensor *rnd_tensor = tensor_rinit(2, 3);
+    tensor_print(rnd_tensor);
+
     tensor_destroy(first_tensor);
     tensor_destroy(second_tensor);
     tensor_destroy(target_tensor);
