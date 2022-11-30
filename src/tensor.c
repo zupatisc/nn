@@ -1,6 +1,6 @@
 #include "tensor.h"
 
-tensor *tensor_init(unsigned int row, unsigned int col, double default_val) {
+Tensor *tensor_init(unsigned int row, unsigned int col, double default_val) {
     double **matrix = malloc(row * sizeof *matrix);
     if (matrix == NULL) {
         //TODO: Error handling
@@ -16,7 +16,7 @@ tensor *tensor_init(unsigned int row, unsigned int col, double default_val) {
          matrix[i] = colp;
     }
 
-    tensor *tensorp = malloc(sizeof(tensor));
+    Tensor *tensorp = malloc(sizeof(Tensor));
     tensorp->matrix = matrix;
     tensorp->dim[0] = row;
     tensorp->dim[1] = col;
@@ -24,8 +24,8 @@ tensor *tensor_init(unsigned int row, unsigned int col, double default_val) {
     return tensorp;
 }
 
-tensor *tensor_rinit(unsigned int row, unsigned int col) {
-    tensor *new_tensor = tensor_init(row, col, 0);
+Tensor *tensor_rinit(unsigned int row, unsigned int col) {
+    Tensor *new_tensor = tensor_init(row, col, 0);
 
     for (int i = 0; i < new_tensor->dim[0] * new_tensor->dim[1]; i++) {
         tensor_set(new_tensor, i, frand());
@@ -34,7 +34,7 @@ tensor *tensor_rinit(unsigned int row, unsigned int col) {
     return new_tensor;
 }
 
-int tensor_destroy(tensor *tensor) { //TODO: return useful info
+int tensor_destroy(Tensor *tensor) { //TODO: return useful info
     for(int i = 0; i < tensor->dim[0]; i++) {
         free(tensor->matrix[i]);
     }
@@ -44,7 +44,7 @@ int tensor_destroy(tensor *tensor) { //TODO: return useful info
     return 0;
 }
 
-int tensor_matmul(tensor *tensor_trgt, tensor *tensor_1, tensor *tensor_2) {
+int tensor_matmul(Tensor *tensor_trgt, Tensor *tensor_1, Tensor *tensor_2) {
     if (tensor_trgt == NULL || tensor_1 == NULL || tensor_2 == NULL)
         return 1;
 
@@ -65,7 +65,7 @@ int tensor_matmul(tensor *tensor_trgt, tensor *tensor_1, tensor *tensor_2) {
     return 0;
 }
 
-void tensor_print(tensor *tensor) {
+void tensor_print(Tensor *tensor) {
     int ir = 0;
     while (ir < tensor->dim[0]) { //Rows
         int ic = 0;
@@ -79,7 +79,7 @@ void tensor_print(tensor *tensor) {
     puts("\n");
 }
 
-double tensor_iter(tensor *tensor, unsigned iter) {
+double tensor_iter(Tensor *tensor, unsigned iter) {
     int ir = 0, target = 0;
     while (ir < tensor->dim[0]) { //Rows
         int ic = 0;
@@ -95,7 +95,7 @@ double tensor_iter(tensor *tensor, unsigned iter) {
     return 0;
 }
 
-double tensor_set(tensor *tensor, unsigned iter, double val) {
+double tensor_set(Tensor *tensor, unsigned iter, double val) {
     int ir = 0, target = 0;
     while (ir < tensor->dim[0]) { //Rows
         int ic = 0;

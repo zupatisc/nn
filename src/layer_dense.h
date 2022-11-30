@@ -13,23 +13,23 @@ struct layer_dense {
     /*
      * Forward pass
      */
-    tensor *weights;
-    tensor *biases;
-    tensor *output;
+    Tensor *weights;
+    Tensor *biases;
+    Tensor *output;
 
     /*
      * Backward pass
      */
-    tensor *inputs;
-    tensor *dinputs;
-    tensor *dvalues;
-    tensor *dweights;
+    Tensor *inputs;
+    Tensor *dinputs;
+    Tensor *dvalues;
+    Tensor *dweights;
 };
 
 //Init function
 layer_dense *layer_dense_init(unsigned n_inputs, unsigned n_neurons);
 //forward pass
-void layer_dense_forward(layer_dense *layer_dense, tensor *inputs);
+void layer_dense_forward(layer_dense *layer_dense, Tensor *inputs);
 //backward pass
-void layer_dense_backward(layer_dense *layer_dense, tensor *dvalues);
+void layer_dense_backward(layer_dense *layer_dense, Tensor *dvalues);
 #endif

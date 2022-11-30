@@ -13,7 +13,7 @@ int main() {
      */
     int row = 8, col = 4;
 
-    tensor *test_tensor = tensor_init(row, col, 0);
+    Tensor *test_tensor = tensor_init(row, col, 0);
 
     printf("Dims: (%d, %d)\n", test_tensor->dim[0], test_tensor->dim[1]);
 
@@ -24,9 +24,9 @@ int main() {
     /*
      * Matrix multiplication test
      */
-    tensor *first_tensor = tensor_init(2, 3, 1);
-    tensor *second_tensor = tensor_init(3, 2, 1);
-    tensor *target_tensor = tensor_init(2, 2, 0);
+    Tensor *first_tensor = tensor_init(2, 3, 1);
+    Tensor *second_tensor = tensor_init(3, 2, 1);
+    Tensor *target_tensor = tensor_init(2, 2, 0);
 
     first_tensor->matrix[0][1] = 2;
     first_tensor->matrix[0][2] = 3;
@@ -46,7 +46,7 @@ int main() {
 
     printf("tensor_iter Test: %f\n", tensor_iter(target_tensor, 3));
 
-    tensor *rnd_tensor = tensor_rinit(2, 3);
+    Tensor *rnd_tensor = tensor_rinit(2, 3);
     tensor_print(rnd_tensor);
 
     tensor_destroy(first_tensor);
