@@ -7,9 +7,9 @@
 
 #include "tensor.h"
 
-typedef struct layer_dense layer_dense;
+typedef struct Layer_Dense Layer_Dense;
 
-struct layer_dense {
+struct Layer_Dense {
     /*
      * Forward pass
      */
@@ -27,9 +27,9 @@ struct layer_dense {
 };
 
 //Init function
-layer_dense *layer_dense_init(unsigned n_inputs, unsigned n_neurons);
+Layer_Dense *layer_dense_init(unsigned n_inputs, unsigned n_neurons);
 //forward pass
-void layer_dense_forward(layer_dense *layer_dense, Tensor *inputs);
+void layer_dense_forward(Layer_Dense *layer_dense, Tensor *inputs);
 //backward pass
-void layer_dense_backward(layer_dense *layer_dense, Tensor *dvalues);
+void layer_dense_backward(Layer_Dense *layer_dense, Tensor *dvalues);
 #endif
