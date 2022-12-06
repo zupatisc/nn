@@ -28,6 +28,8 @@ struct Layer_Dense {
 
 //Init function
 Layer_Dense *layer_dense_init(unsigned n_inputs, unsigned n_neurons);
+//Destroy layer
+int layer_dense_destroy(Layer_Dense *layer_dense);
 //forward pass
 void layer_dense_forward(Layer_Dense *layer_dense, Tensor *inputs);
 //backward pass
