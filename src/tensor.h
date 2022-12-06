@@ -26,7 +26,10 @@ Tensor *tensor_rinit(unsigned row, unsigned col);
 //destroy tensor
 int tensor_destroy(Tensor *tensor);
 //Matrix multiplication/dot product
-int tensor_matmul(Tensor *tensor_trgt, Tensor *tensor_1, Tensor *tensor_2);
+int tensor_dot(Tensor *tensor_trgt, Tensor *tensor_1, Tensor *tensor_2);
+//Elementwise addition
+//TODO: Broadcasting
+int tensor_add(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2);
 // Print tensor
 void tensor_print(Tensor *tensor);
 //sum over specific axis

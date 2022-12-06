@@ -35,21 +35,23 @@ Tensor *tensor_rinit(unsigned int row, unsigned int col) {
 }
 
 int tensor_destroy(Tensor *tensor) { //TODO: return useful info
-    for(int i = 0; i < tensor->dim[0]; i++) {
-        free(tensor->matrix[i]);
+    if (tensor) {
+        for(int i = 0; i < tensor->dim[0]; i++) {
+            free(tensor->matrix[i]);
+        }
+        free(tensor->matrix);
     }
-    free(tensor->matrix);
     free(tensor);
 
     return 0;
 }
 
-int tensor_matmul(Tensor *tensor_trgt, Tensor *tensor_1, Tensor *tensor_2) {
+int tensor_dot(Tensor *tensor_trgt, Tensor *tensor_1, Tensor *tensor_2) {
     if (tensor_trgt == NULL || tensor_1 == NULL || tensor_2 == NULL)
-        return 1;
+        return EXIT_FAILURE;
 
      if (tensor_trgt->dim[0] != tensor_1->dim[0] || tensor_trgt->dim[1] != tensor_2->dim[1])
-         return 1;
+         return EXIT_FAILURE;
 
      //Taken from my python work
      for (int ir = 0; ir < tensor_trgt->dim[0]; ir++) {
@@ -62,7 +64,26 @@ int tensor_matmul(Tensor *tensor_trgt, Tensor *tensor_1, Tensor *tensor_2) {
          }
      }
 
-    return 0;
+    return EXIT_SUCCESS;
+}
+
+int tensor_add(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2) {
+    if (tensor_trgt == NULL || tensor_1 == NULL || tensor_2 == NULL)
+        return EXIT_FAILURE;
+
+    if (tensor_trgt->dim[0] != tensor_1->dim[0] || tensor_trgt->dim[1] != tensor_1->dim[1])
+        return EXIT_FAILURE;
+
+    if (tensor_trgt->dim[0] != tensor_2->dim[0] || tensor_trgt->dim[1] != tensor_2->dim[1])
+        return EXIT_FAILURE;
+
+    for(int ir = 0; ir < tensor_trgt->dim[0]; ir++) {
+        for (int ic = 0; ic < tensor_trgt->dim[1]; ic++) {
+            tensor_trgt->matrix[ir][ic] = tensor_1->matrix[ir][ic] + tensor_2->matrix[ir][ic];
+        }
+    }
+
+    return EXIT_SUCCESS;
 }
 
 void tensor_print(Tensor *tensor) {
