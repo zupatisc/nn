@@ -1,28 +1,38 @@
-##########################################
-#           Editable options             #
-##########################################
+include config.mk
 
-# Compiler options
-CXX = clang
-CXXFLAGS += -std=c17 -pedantic -Wall -Wno-deprecated-declarations
-LDFLAGS += -pedantic -Wall -lm
-LDLIBS +=
-#EXECUTABLE_NAME = $(SOURCE_FILES:%c=%)
+# $@ Outputs target name
+# $? Outputs all prerequisites newer than the target
+# $^ Outputs all prerequisites
 
-# Folders
-SRC = src
-BIN = bin
-OBJ = $(BIN)/obj
+all: bin/nn tests
 
-RM = rm -r
+# Object files
+obj/%.o : src/%.c
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
 
-src = $(wildcard src/*.c)
-obj = $(src:.c=.o)
-bin = $(src:.c=.out) 
+obj/%.o : src/tests/%.c
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
 
-$(bin): $(obj)
-	$(CXX) -o $@ $^ $(LDFLAGS)
+# obj/test_tensor.o: src/tests/test_tensor.c
+# 	clang -c $^ -o $@
 
-.PHONY: clean
+bin/nn: obj/main.o obj/layer_dense.o obj/tensor.o
+	clang -o bin/nn obj/main.o obj/layer_dense.o obj/tensor.o
+
+# Tests
+tests: bin/test_tensor
+
+bin/test_tensor: obj/test_tensor.o obj/tensor.o
+	clang -o $@ $^
+
+print: $(wildcard src/*.c)
+	echo $?
+	ls -la $?
+
+objects: $(wildcard obj/*.o)
+	echo $?
+
 clean:
-	rm -f $(obj)
+	rm bin/nn obj/main.o obj/layer_dense.o obj/tensor.o
+
+.PHONY: clean all tests
