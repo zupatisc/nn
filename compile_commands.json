@@ -1,0 +1,82 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-std=c17",
+      "-pedantic",
+      "-Wall",
+      "-Wno-deprecated-declarations",
+      "-o",
+      "obj/main.o",
+      "src/main.c"
+    ],
+    "directory": "/home/drone/dev/c/nn",
+    "file": "/home/drone/dev/c/nn/src/main.c",
+    "output": "/home/drone/dev/c/nn/obj/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-std=c17",
+      "-pedantic",
+      "-Wall",
+      "-Wno-deprecated-declarations",
+      "-o",
+      "obj/layer_dense.o",
+      "src/layer_dense.c"
+    ],
+    "directory": "/home/drone/dev/c/nn",
+    "file": "/home/drone/dev/c/nn/src/layer_dense.c",
+    "output": "/home/drone/dev/c/nn/obj/layer_dense.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-std=c17",
+      "-pedantic",
+      "-Wall",
+      "-Wno-deprecated-declarations",
+      "-o",
+      "obj/tensor.o",
+      "src/tensor.c"
+    ],
+    "directory": "/home/drone/dev/c/nn",
+    "file": "/home/drone/dev/c/nn/src/tensor.c",
+    "output": "/home/drone/dev/c/nn/obj/tensor.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-std=c17",
+      "-pedantic",
+      "-Wall",
+      "-Wno-deprecated-declarations",
+      "-o",
+      "obj/test_tensor.o",
+      "src/tests/test_tensor.c"
+    ],
+    "directory": "/home/drone/dev/c/nn",
+    "file": "/home/drone/dev/c/nn/src/tests/test_tensor.c",
+    "output": "/home/drone/dev/c/nn/obj/test_tensor.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-std=c17",
+      "-pedantic",
+      "-Wall",
+      "-Wno-deprecated-declarations",
+      "-o",
+      "obj/test_layer_dense.o",
+      "src/tests/test_layer_dense.c"
+    ],
+    "directory": "/home/drone/dev/c/nn",
+    "file": "/home/drone/dev/c/nn/src/tests/test_layer_dense.c",
+    "output": "/home/drone/dev/c/nn/obj/test_layer_dense.o"
+  }
+]

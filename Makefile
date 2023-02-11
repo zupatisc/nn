@@ -4,7 +4,13 @@ include config.mk
 # $? Outputs all prerequisites newer than the target
 # $^ Outputs all prerequisites
 
+.DELETE_ON_ERROR:
 all: bin/nn tests
+
+# Main binary
+bin/nn: $(deps_nn)
+	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
+
 
 # Object files
 obj/%.o : src/%.c
@@ -13,17 +19,21 @@ obj/%.o : src/%.c
 obj/%.o : src/tests/%.c
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
 
-# obj/test_tensor.o: src/tests/test_tensor.c
-# 	clang -c $^ -o $@
-
-bin/nn: obj/main.o obj/layer_dense.o obj/tensor.o
-	clang -o bin/nn obj/main.o obj/layer_dense.o obj/tensor.o
 
 # Tests
-tests: bin/test_tensor
+tests: bin/test_tensor bin/test_layer_dense
 
-bin/test_tensor: obj/test_tensor.o obj/tensor.o
-	clang -o $@ $^
+bin/test_tensor: $(deps_test_tensor)
+	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
+
+bin/test_layer_dense: $(deps_test_layer_dense)
+	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
+
+
+clean:
+	rm bin/nn obj/main.o obj/layer_dense.o obj/tensor.o
+
+.PHONY: clean all tests
 
 print: $(wildcard src/*.c)
 	echo $?
@@ -31,8 +41,3 @@ print: $(wildcard src/*.c)
 
 objects: $(wildcard obj/*.o)
 	echo $?
-
-clean:
-	rm bin/nn obj/main.o obj/layer_dense.o obj/tensor.o
-
-.PHONY: clean all tests
