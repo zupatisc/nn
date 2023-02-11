@@ -161,8 +161,46 @@ static int tensor_cmp_test(void) {
     return EXIT_SUCCESS;
 }
 
+static int tensor_add_test(void) {
+    MSG_START;
+
+    Tensor *first_tensor = tensor_init(3, 2, 3);
+    Tensor *second_tensor = tensor_init(3, 2, 2);
+    Tensor *reference_tensor = tensor_init(3, 2, 5);
+    Tensor *reference_tensor_2 = tensor_init(3, 2, 7);
+
+    assert(tensor_add(first_tensor, first_tensor, second_tensor) == EXIT_SUCCESS);
+    // tensor_print(first_tensor);
+    assert(tensor_cmp(reference_tensor, first_tensor) == true);
+
+    Tensor *target_tensor = tensor_init(3, 2, 0);
+    assert(tensor_add(target_tensor, first_tensor, second_tensor) == EXIT_SUCCESS);
+    assert(tensor_cmp(target_tensor, reference_tensor_2) == true);
+
+    tensor_destroy(first_tensor);
+    tensor_destroy(second_tensor);
+    tensor_destroy(reference_tensor);
+    tensor_destroy(reference_tensor_2);
+
+    // Broadcasting test
+    Tensor *bias_tensor = tensor_init(1, 8, 4);
+    Tensor *values_tensor = tensor_init(4, 8, 16);
+    Tensor *reference_tensor_outputs = tensor_init(4, 8, 20);
+
+    assert(tensor_add(values_tensor, values_tensor, bias_tensor) == EXIT_SUCCESS);
+    assert(tensor_cmp(values_tensor, reference_tensor_outputs) == true);
+
+    tensor_destroy(bias_tensor);
+    tensor_destroy(values_tensor);
+    tensor_destroy(reference_tensor_outputs);
+
+    MSG_STOP;
+    return EXIT_SUCCESS;
+}
+
 int main(void) {
     basic_test();
+    tensor_add_test();
     dotproduct_test();
     iteration_test();
     rinit_test();

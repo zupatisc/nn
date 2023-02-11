@@ -13,8 +13,8 @@
 
 #define frand() (((double) rand() / (RAND_MAX + 1.0)) - 0.5)
 
-#define ETENNULL 5 // Critical Tensor was NULL
-#define ETENMIS 6 // Tensors mismatched and could not be broadcast
+#define ETENNULL 15 // Critical Tensor was NULL
+#define ETENMIS 16 // Tensors mismatched and could not be broadcast
 
 #define CMPPREC  1e-6
 
@@ -46,6 +46,9 @@ int tensor_add(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2);
 
 // Print tensor
 void tensor_print(Tensor *tensor);
+
+// Print shapes of tensor (rows, columns)
+void tensor_shapes(Tensor *tensor);
 
 // Compare tensors by value
 bool tensor_cmp(Tensor *tensor_1, Tensor *tensor_2);

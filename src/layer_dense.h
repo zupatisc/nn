@@ -7,7 +7,7 @@
 
 #include "tensor.h"
 
-#define ELDFNULL 15 // Critical Tensor in forward pass is NULL
+#define ELDFNULL 25 // Critical Tensor in forward pass is NULL
 
 typedef struct Layer_Dense Layer_Dense;
 

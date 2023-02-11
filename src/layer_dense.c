@@ -31,18 +31,25 @@ int layer_dense_forward(Layer_Dense *layer_dense, Tensor *inputs) {
     if (inputs == NULL)
         return ELDFNULL;
 
-    //Since we don't know the size of output before getting the inputs we need
-    //to creat it now.
+    // Since we don't know the size of output before getting the inputs
+    // we need to create it now.
     layer_dense->output = tensor_init(inputs->dim[0], layer_dense->weights->dim[1], 0);
-    tensor_print(layer_dense->output);
+    tensor_print(layer_dense->output); //TODO: Remove printing
 
     layer_dense->inputs = inputs;
-    if(tensor_dot(layer_dense->output, inputs, layer_dense->weights))
-        printf("Panic");
-    tensor_print(layer_dense->output);
-    if(tensor_add(layer_dense->output, layer_dense->output, layer_dense->biases))
-        printf("Panic");
-    tensor_print(layer_dense->output);
+    int rval = tensor_dot(layer_dense->output, inputs, layer_dense->weights);
+    if (rval != EXIT_SUCCESS) {
+        printf("Panic: tensor_dot - Error: %d\n", rval);
+        return rval;
+    }
+    tensor_print(layer_dense->output); //TODO: Remove printing
+
+    rval = tensor_add(layer_dense->output, layer_dense->output, layer_dense->biases);
+    if (rval != EXIT_SUCCESS) {
+        printf("Panic: tensor_add - Error: %d\n", rval);
+        return rval;
+    }
+    tensor_print(layer_dense->output); //TODO: Remove printing
 
     return EXIT_SUCCESS;
 }

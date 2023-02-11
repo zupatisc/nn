@@ -105,18 +105,33 @@ int tensor_dot(Tensor *tensor_trgt, Tensor *tensor_1, Tensor *tensor_2) {
 
 int tensor_add(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2) {
     if (tensor_trgt == NULL || tensor_1 == NULL || tensor_2 == NULL)
-        return EXIT_FAILURE;
+        return ETENNULL;
 
     if (tensor_trgt->dim[0] != tensor_1->dim[0] || tensor_trgt->dim[1] != tensor_1->dim[1])
-        return EXIT_FAILURE;
+        return ETENMIS;
 
-    if (tensor_trgt->dim[0] != tensor_2->dim[0] || tensor_trgt->dim[1] != tensor_2->dim[1])
-        return EXIT_FAILURE;
+    unsigned ir = 0, ic = ir;
+    unsigned *ir2 = &ir;
+    unsigned *ic2 = &ic;
+    unsigned hold_dim = 0;
 
-    for(unsigned ir = 0; ir < tensor_trgt->dim[0]; ir++) {
-        for (unsigned ic = 0; ic < tensor_trgt->dim[1]; ic++) {
-            tensor_trgt->matrix[ir][ic] = tensor_1->matrix[ir][ic] + tensor_2->matrix[ir][ic];
+    if (tensor_trgt->dim[0] != tensor_2->dim[0] || tensor_trgt->dim[1] != tensor_2->dim[1]) {
+        if (tensor_2->dim[0] == 1 && tensor_2->dim[1] != 1) {
+            puts("Dim 0 is 1"); //TODO: Remove printing
+            ir2 = &hold_dim;
+        } else if (tensor_2->dim[0] != 1 && tensor_2->dim[1] == 1) {
+            puts("Dim 1 is 1"); //TODO: Remove printing
+            ic2 = &hold_dim;
+        } else {
+            return ETENMIS;
         }
+    }
+
+    for(; ir < tensor_trgt->dim[0]; ir++) {
+        for (; ic < tensor_trgt->dim[1]; ic++) {
+            tensor_trgt->matrix[ir][ic] = tensor_1->matrix[ir][ic] + tensor_2->matrix[*ir2][*ic2];
+        }
+        ic = 0;
     }
 
     return EXIT_SUCCESS;
@@ -134,6 +149,10 @@ void tensor_print(Tensor *tensor) {
         ir++;
     }
     puts("\n");
+}
+
+void tensor_shapes(Tensor *tensor) {
+    printf("Shape: (%d, %d)\n", tensor->dim[0], tensor->dim[1]);
 }
 
 bool tensor_cmp(Tensor *tensor_1, Tensor *tensor_2) {
