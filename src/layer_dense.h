@@ -7,6 +7,8 @@
 
 #include "tensor.h"
 
+#define ELDFNULL 15 // Critical Tensor in forward pass is NULL
+
 typedef struct Layer_Dense Layer_Dense;
 
 struct Layer_Dense {
@@ -31,7 +33,7 @@ Layer_Dense *layer_dense_init(unsigned n_inputs, unsigned n_neurons);
 //Destroy layer
 int layer_dense_destroy(Layer_Dense *layer_dense);
 //forward pass
-void layer_dense_forward(Layer_Dense *layer_dense, Tensor *inputs);
+int layer_dense_forward(Layer_Dense *layer_dense, Tensor *inputs);
 //backward pass
-void layer_dense_backward(Layer_Dense *layer_dense, Tensor *dvalues);
+int layer_dense_backward(Layer_Dense *layer_dense, Tensor *dvalues);
 #endif

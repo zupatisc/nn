@@ -8,8 +8,15 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
 
 #define frand() (((double) rand() / (RAND_MAX + 1.0)) - 0.5)
+
+#define ETENNULL 5 // Critical Tensor was NULL
+#define ETENMIS 6 // Tensors mismatched and could not be broadcast
+
+#define CMPPREC  1e-6
 
 typedef struct Tensor Tensor;
 
@@ -21,17 +28,27 @@ struct Tensor {
 //Needed functions:
 //init with dimensions and default value
 Tensor *tensor_init(unsigned row, unsigned col, double default_val);
+
 //random init
 Tensor *tensor_rinit(unsigned row, unsigned col);
+
 //destroy tensor
 int tensor_destroy(Tensor *tensor);
+
 //Matrix multiplication/dot product
+//TODO: Broadcasting
+//TODO: Return new tensor if target is NULL
 int tensor_dot(Tensor *tensor_trgt, Tensor *tensor_1, Tensor *tensor_2);
+
 //Elementwise addition
 //TODO: Broadcasting
 int tensor_add(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2);
+
 // Print tensor
 void tensor_print(Tensor *tensor);
+
+// Compare tensors by value
+bool tensor_cmp(Tensor *tensor_1, Tensor *tensor_2);
 //sum over specific axis
 //np.max(a, b)
 //Transpose matrix

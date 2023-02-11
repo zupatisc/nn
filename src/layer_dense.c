@@ -25,11 +25,11 @@ int layer_dense_destroy(Layer_Dense *layer_dense) {
     return EXIT_SUCCESS;
 }
 
-void layer_dense_forward(Layer_Dense *layer_dense, Tensor *inputs) {
+int layer_dense_forward(Layer_Dense *layer_dense, Tensor *inputs) {
     if (layer_dense->weights == NULL || layer_dense->biases == NULL)
-        printf("Panic"); //TODO: Fail better
+        return ELDFNULL;
     if (inputs == NULL)
-        printf("Also panic"); //TODO: Fail better
+        return ELDFNULL;
 
     //Since we don't know the size of output before getting the inputs we need
     //to creat it now.
@@ -44,9 +44,10 @@ void layer_dense_forward(Layer_Dense *layer_dense, Tensor *inputs) {
         printf("Panic");
     tensor_print(layer_dense->output);
 
-    return;
+    return EXIT_SUCCESS;
 }
 
-void layer_dense_backward(Layer_Dense *layer_dense, Tensor *dvalues) {
+int layer_dense_backward(Layer_Dense *layer_dense, Tensor *dvalues) {
 
+    return EXIT_SUCCESS;
 }
