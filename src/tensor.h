@@ -15,6 +15,7 @@
 
 #define ETENNULL 15 // Critical Tensor was NULL
 #define ETENMIS 16 // Tensors mismatched and could not be broadcast
+#define EDIM 17
 
 #define CMPPREC  1e-6
 
@@ -41,7 +42,6 @@ int tensor_destroy(Tensor *tensor);
 int tensor_dot(Tensor *tensor_trgt, Tensor *tensor_1, Tensor *tensor_2);
 
 //Elementwise addition
-//TODO: Broadcasting
 int tensor_add(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2);
 
 // Print tensor
@@ -52,7 +52,13 @@ void tensor_shapes(Tensor *tensor);
 
 // Compare tensors by value
 bool tensor_cmp(Tensor *tensor_1, Tensor *tensor_2);
+
+// Return new tensor which is transpose of input
+Tensor *tensor_transpose(Tensor *tensor);
+
 //sum over specific axis
+int tensor_sum(Tensor *tensor_trgt, Tensor *tensor_1, unsigned dim);
+
 //np.max(a, b)
 //Transpose matrix
 //iterate through tensor and check for conidtion

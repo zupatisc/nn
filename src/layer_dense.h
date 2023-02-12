@@ -18,13 +18,14 @@ struct Layer_Dense {
     Tensor *weights;
     Tensor *biases;
     Tensor *output;
+    Tensor *inputs;
 
     /*
      * Backward pass
      */
-    Tensor *inputs;
     Tensor *dinputs;
     Tensor *dvalues;
+    Tensor *dbiases;
     Tensor *dweights;
 };
 

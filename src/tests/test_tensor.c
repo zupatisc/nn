@@ -198,6 +198,76 @@ static int tensor_add_test(void) {
     return EXIT_SUCCESS;
 }
 
+int transpose_test(void) {
+    MSG_START;
+
+    Tensor *first_tensor = tensor_init(3, 4, 0);
+    first_tensor->matrix[0][0] = 1;
+    first_tensor->matrix[0][1] = 2;
+    first_tensor->matrix[0][2] = 3;
+    first_tensor->matrix[0][3] = 4;
+    first_tensor->matrix[1][0] = 5;
+    first_tensor->matrix[1][1] = 6;
+    first_tensor->matrix[1][2] = 7;
+    first_tensor->matrix[1][3] = 8;
+    first_tensor->matrix[2][0] = 9;
+    first_tensor->matrix[2][1] = 10;
+    first_tensor->matrix[2][2] = 11;
+    first_tensor->matrix[2][3] = 12;
+    // tensor_print(first_tensor);
+
+    Tensor *reference_tensor = tensor_init(4, 3, 0);
+    reference_tensor->matrix[0][0] = 1;
+    reference_tensor->matrix[0][1] = 5;
+    reference_tensor->matrix[0][2] = 9;
+    reference_tensor->matrix[1][0] = 2;
+    reference_tensor->matrix[1][1] = 6;
+    reference_tensor->matrix[1][2] = 10;
+    reference_tensor->matrix[2][0] = 3;
+    reference_tensor->matrix[2][1] = 7;
+    reference_tensor->matrix[2][2] = 11;
+    reference_tensor->matrix[3][0] = 4;
+    reference_tensor->matrix[3][1] = 8;
+    reference_tensor->matrix[3][2] = 12;
+
+    Tensor *transpose = tensor_transpose(first_tensor);
+    // tensor_print(transpose);
+    assert(tensor_cmp(transpose, reference_tensor) == true);
+
+    tensor_destroy(first_tensor);
+    tensor_destroy(transpose);
+    tensor_destroy(reference_tensor);
+
+    MSG_STOP;
+    return EXIT_SUCCESS;
+}
+
+int sum_test(void) {
+    MSG_START;
+
+    Tensor *first_tensor = tensor_init(4, 3, 1);
+    Tensor *target_tensor_1 = tensor_init(1, 3, 0);
+    Tensor *target_tensor_2 = tensor_init(4, 1, 0);
+
+    assert(tensor_cmp(first_tensor, target_tensor_1) == false);
+
+    assert(tensor_sum(target_tensor_1, first_tensor, 0) == EXIT_SUCCESS);
+    assert(target_tensor_1->matrix[0][0] == 4);
+    assert(target_tensor_1->matrix[0][1] == 4);
+    assert(target_tensor_1->matrix[0][2] == 4);
+
+    assert(tensor_cmp(first_tensor, target_tensor_2) == false);
+
+    assert(tensor_sum(target_tensor_2, first_tensor, 1) == EXIT_SUCCESS);
+    assert(target_tensor_2->matrix[0][0] == 3);
+    assert(target_tensor_2->matrix[1][0] == 3);
+    assert(target_tensor_2->matrix[2][0] == 3);
+    assert(target_tensor_2->matrix[3][0] == 3);
+
+    MSG_STOP;
+    return EXIT_SUCCESS;
+}
+
 int main(void) {
     basic_test();
     tensor_add_test();
@@ -207,6 +277,8 @@ int main(void) {
     tensor_cmp_test();
     // dotproduct_create_target_tensor_test();
     // broadcast_test();
+    transpose_test();
+    sum_test();
 
     printf("Tensor Test success!\n");
 
