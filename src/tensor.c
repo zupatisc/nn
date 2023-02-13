@@ -1,4 +1,5 @@
 #include "tensor.h"
+#include <math.h>
 #include <stdio.h>
 
 Tensor *tensor_init(unsigned int row, unsigned int col, double default_val) {
@@ -113,7 +114,7 @@ int tensor_add(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2) 
     unsigned ir = 0, ic = ir;
     unsigned *ir2 = &ir;
     unsigned *ic2 = &ic;
-    const unsigned hold_dim = 0;
+    unsigned hold_dim = 0;
 
     if (tensor_trgt->dim[0] != tensor_2->dim[0] || tensor_trgt->dim[1] != tensor_2->dim[1]) {
         if (tensor_2->dim[0] == 1 && tensor_2->dim[1] != 1) {
@@ -176,6 +177,55 @@ int tensor_sum(Tensor *tensor_trgt, Tensor *tensor_1, unsigned dim) {
             return EDIM;
     }
 
+    return EXIT_SUCCESS;
+}
+
+int tensor_mult(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2) {
+    if (tensor_trgt == NULL || tensor_1 == NULL || tensor_2 == NULL)
+        return ETENNULL;
+
+    if ((tensor_1->dim[0] != tensor_trgt->dim[0] && tensor_1->dim[0] != 1) || 
+            (tensor_1->dim[1] != tensor_trgt->dim[1] && tensor_1->dim[1] != 1))
+        return ETENMIS;
+    if ((tensor_2->dim[0] != tensor_trgt->dim[0] && tensor_2->dim[0] != 1) || 
+            (tensor_2->dim[1] != tensor_trgt->dim[1] && tensor_2->dim[1] != 1))
+        return ETENMIS;
+
+
+    unsigned irt = 0, ict = irt;
+    unsigned *ir1 = &irt, *ic1 = &ict;
+    unsigned *ir2 = &irt, *ic2 = &ict;
+    unsigned hold_dim = 0;
+
+    if (tensor_1->dim[0] == 1)
+        ir1 = &hold_dim;
+    if (tensor_1->dim[1] == 1)
+        ic1 = &hold_dim;
+    if (tensor_2->dim[0] == 1)
+        ir2 = &hold_dim;
+    if (tensor_2->dim[1] == 1)
+        ic2 = &hold_dim;
+
+    for (; irt < tensor_trgt->dim[0]; irt++) {
+        for (; ict < tensor_trgt->dim[1]; ict++) {
+            tensor_trgt->matrix[irt][ict] = tensor_1->matrix[*ir1][*ic1] * tensor_2->matrix[*ir2][*ic2];
+        }
+        ict = 0;
+    }
+    return EXIT_SUCCESS;
+}
+
+int tensor_pow(Tensor *tensor_trgt, Tensor *tensor_1, double exponent) {
+    if (tensor_trgt == NULL || tensor_1 == NULL)
+        return ETENNULL;
+    if (tensor_1->dim[0] != tensor_trgt->dim[0] || tensor_1->dim[1] != tensor_trgt->dim[1])
+        return ETENMIS;
+
+    for (unsigned ir = 0; ir < tensor_trgt->dim[0]; ir++) {
+        for (unsigned ic = 0; ic < tensor_trgt->dim[1]; ic++) {
+            tensor_trgt->matrix[ir][ic] = pow(tensor_1->matrix[ir][ic], exponent);
+        }
+    }
     return EXIT_SUCCESS;
 }
 

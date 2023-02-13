@@ -56,11 +56,16 @@ bool tensor_cmp(Tensor *tensor_1, Tensor *tensor_2);
 // Return new tensor which is transpose of input
 Tensor *tensor_transpose(Tensor *tensor);
 
-//sum over specific axis
+// sum over specific axis
 int tensor_sum(Tensor *tensor_trgt, Tensor *tensor_1, unsigned dim);
 
+// Elementwise multiplication
+int tensor_mult(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2);
+
+// Elementwise power
+int tensor_pow(Tensor *tensor_trgt, Tensor *tensor_1, double exponent);
+
 //np.max(a, b)
-//Transpose matrix
 //iterate through tensor and check for conidtion
 //iterate through tensor and apply operation
 //Iterate through tensor in a flat manner and return value of item

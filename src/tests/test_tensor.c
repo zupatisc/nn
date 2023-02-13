@@ -268,6 +268,53 @@ int sum_test(void) {
     return EXIT_SUCCESS;
 }
 
+static int tensor_mult_test(void) {
+    MSG_START;
+
+    Tensor *first_tensor = tensor_init(3, 2, 3);
+    Tensor *second_tensor = tensor_init(3, 2, 2);
+    Tensor *target_tensor = tensor_init(3, 2, 0);
+    Tensor *reference_tensor_1 = tensor_init(3, 2, 6);
+
+    assert(tensor_mult(target_tensor, first_tensor, second_tensor) == EXIT_SUCCESS);
+    assert(tensor_cmp(reference_tensor_1, target_tensor) == true);
+
+    Tensor *third_tensor = tensor_init(1, 2, 2);
+    Tensor *reference_tensor_2 = tensor_init(3, 2, 12);
+    assert(tensor_mult(target_tensor, target_tensor, third_tensor) == EXIT_SUCCESS);
+    assert(tensor_cmp(reference_tensor_2, target_tensor) == true);
+
+
+    tensor_destroy(first_tensor);
+    tensor_destroy(second_tensor);
+    tensor_destroy(target_tensor);
+    tensor_destroy(reference_tensor_1);
+    tensor_destroy(reference_tensor_2);
+    tensor_destroy(third_tensor);
+
+    MSG_STOP;
+    return EXIT_SUCCESS;
+}
+
+static int tensor_pow_test(void) {
+    MSG_START;
+
+    Tensor *first_tensor = tensor_init(3, 2, 3);
+    // Tensor *second_tensor = tensor_init(3, 2, 2);
+    Tensor *target_tensor = tensor_init(3, 2, 0);
+    Tensor *reference_tensor_1 = tensor_init(3, 2, 9);
+
+    assert(tensor_pow(target_tensor, first_tensor, 2) == EXIT_SUCCESS);
+    assert(tensor_cmp(target_tensor, reference_tensor_1) == true);
+
+    tensor_destroy(first_tensor);
+    // tensor_destroy(second_tensor);
+    tensor_destroy(target_tensor);
+
+    MSG_STOP;
+    return EXIT_SUCCESS;
+}
+
 int main(void) {
     basic_test();
     tensor_add_test();
@@ -279,6 +326,8 @@ int main(void) {
     // broadcast_test();
     transpose_test();
     sum_test();
+    tensor_mult_test();
+    tensor_pow_test();
 
     printf("Tensor Test success!\n");
 
