@@ -47,23 +47,29 @@ int layer_dense_forward(Layer_Dense *layer_dense, Tensor *inputs) {
     // we need to create it now.
     if (layer_dense->output == NULL) {
         layer_dense->output = tensor_init(inputs->dim[0], layer_dense->weights->dim[1], 0);
+    } else if (layer_dense->output->dim[0] != inputs->dim[0]) {
+        tensor_destroy(layer_dense->output);
+        layer_dense->output = tensor_init(inputs->dim[0], layer_dense->weights->dim[1], 0);
     }
-    tensor_print(layer_dense->output); //TODO: Remove printing
 
-    layer_dense->inputs = inputs;
+    if (layer_dense->inputs != NULL && layer_dense->inputs != inputs) { // Clear tensor if not NULL
+        tensor_destroy(layer_dense->inputs);
+        layer_dense->inputs = inputs;
+    } else if (layer_dense->inputs == NULL) {
+        layer_dense->inputs = inputs;
+    }
+
     int rval = tensor_dot(layer_dense->output, inputs, layer_dense->weights);
     if (rval != EXIT_SUCCESS) {
         printf("Panic: tensor_dot - Error: %d\n", rval);
         return rval;
     }
-    tensor_print(layer_dense->output); //TODO: Remove printing
 
     rval = tensor_add(layer_dense->output, layer_dense->output, layer_dense->biases);
     if (rval != EXIT_SUCCESS) {
         printf("Panic: tensor_add - Error: %d\n", rval);
         return rval;
     }
-    tensor_print(layer_dense->output); //TODO: Remove printing
 
     return EXIT_SUCCESS;
 }
