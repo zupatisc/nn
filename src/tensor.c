@@ -36,6 +36,11 @@ Tensor *tensor_rinit(unsigned int row, unsigned int col) {
     return new_tensor;
 }
 
+Tensor *tensor_like(Tensor *tensor, double default_val) {
+    Tensor *new_tensor = tensor_init(tensor->dim[0], tensor->dim[1], default_val);
+    return new_tensor;
+}
+
 int tensor_destroy(Tensor *tensor) { //TODO: return useful info
     if (tensor) {
         for(unsigned i = 0; i < tensor->dim[0]; i++) {
@@ -135,6 +140,41 @@ int tensor_add(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2) 
         ic = 0;
     }
 
+    return EXIT_SUCCESS;
+}
+
+int tensor_sub(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2) {
+    if (tensor_trgt == NULL || tensor_1 == NULL || tensor_2 == NULL)
+        return ETENNULL;
+
+    if ((tensor_1->dim[0] != tensor_trgt->dim[0] && tensor_1->dim[0] != 1) || 
+            (tensor_1->dim[1] != tensor_trgt->dim[1] && tensor_1->dim[1] != 1))
+        return ETENMIS;
+    if ((tensor_2->dim[0] != tensor_trgt->dim[0] && tensor_2->dim[0] != 1) || 
+            (tensor_2->dim[1] != tensor_trgt->dim[1] && tensor_2->dim[1] != 1))
+        return ETENMIS;
+
+
+    unsigned irt = 0, ict = irt;
+    unsigned *ir1 = &irt, *ic1 = &ict;
+    unsigned *ir2 = &irt, *ic2 = &ict;
+    unsigned hold_dim = 0;
+
+    if (tensor_1->dim[0] == 1)
+        ir1 = &hold_dim;
+    if (tensor_1->dim[1] == 1)
+        ic1 = &hold_dim;
+    if (tensor_2->dim[0] == 1)
+        ir2 = &hold_dim;
+    if (tensor_2->dim[1] == 1)
+        ic2 = &hold_dim;
+
+    for (; irt < tensor_trgt->dim[0]; irt++) {
+        for (; ict < tensor_trgt->dim[1]; ict++) {
+            tensor_trgt->matrix[irt][ict] = tensor_1->matrix[*ir1][*ic1] - tensor_2->matrix[*ir2][*ic2];
+        }
+        ict = 0;
+    }
     return EXIT_SUCCESS;
 }
 

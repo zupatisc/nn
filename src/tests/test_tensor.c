@@ -329,7 +329,7 @@ int main(void) {
     tensor_mult_test();
     tensor_pow_test();
 
-    printf("Tensor Test success!\n");
+    printf("Tensor Test success!\n\n");
 
     return EXIT_SUCCESS;
 }

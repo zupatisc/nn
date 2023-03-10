@@ -19,7 +19,7 @@ static int test_layer_dense(void) {
 
 
     Tensor *test_tensor = tensor_init(4, 1, 1);
-    tensor_print(test_tensor);
+    // tensor_print(test_tensor);
 
     assert(layer_dense_forward(test_layer, test_tensor) == EXIT_SUCCESS);
 
@@ -139,7 +139,7 @@ int main(void) {
     double_forward_test();
     backward_test();
 
-    printf("Layer_Dense Test success!\n");
+    printf("Layer_Dense Test success!\n\n");
 
     return EXIT_SUCCESS;
 }

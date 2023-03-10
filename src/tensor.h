@@ -33,6 +33,8 @@ Tensor *tensor_init(unsigned row, unsigned col, double default_val);
 //random init
 Tensor *tensor_rinit(unsigned row, unsigned col);
 
+Tensor *tensor_like(Tensor *tensor, double default_val);
+
 //destroy tensor
 int tensor_destroy(Tensor *tensor);
 
@@ -43,6 +45,9 @@ int tensor_dot(Tensor *tensor_trgt, Tensor *tensor_1, Tensor *tensor_2);
 
 //Elementwise addition
 int tensor_add(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2);
+
+// Elementwise substraction
+int tensor_sub(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2);
 
 // Print tensor
 void tensor_print(Tensor *tensor);
