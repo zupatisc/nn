@@ -47,6 +47,9 @@ int activation_tanh_backward(Activation_Tanh *activation_tanh, Tensor *dvalues) 
     if (dvalues == NULL)
         return ETENNULL;
 
+    if (activation_tanh->inputs == NULL)
+        return ETENNULL;
+
     if (activation_tanh->dinputs != NULL) {
         tensor_destroy(activation_tanh->dinputs);
     }
