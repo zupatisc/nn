@@ -2,7 +2,7 @@
 CC=clang
 # Extra flags to give to the C compiler
 CFLAGS=-std=c17 -pedantic -Wall -Wno-deprecated-declarations
-CFLAGS:=-fsanitize=address -O1 -fno-omit-frame-pointer -g $(CFLAGS)
+CFLAGS:=-fsanitize=address -fno-omit-frame-pointer -g $(CFLAGS)
 # Extra flags to give to the C preprocessor
 # CPPFLAGS=
 # Extra flags to give to compilers when they are supposed to invoke the linker

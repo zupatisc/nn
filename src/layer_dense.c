@@ -26,9 +26,9 @@ int layer_dense_destroy(Layer_Dense *layer_dense) {
     tensor_destroy(layer_dense->weights);
     tensor_destroy(layer_dense->biases);
     tensor_destroy(layer_dense->output);
-    tensor_destroy(layer_dense->inputs);
+    // tensor_destroy(layer_dense->inputs);
 
-    tensor_destroy(layer_dense->dinputs);
+    // tensor_destroy(layer_dense->dinputs);
     tensor_destroy(layer_dense->dvalues);
     tensor_destroy(layer_dense->dweights);
 

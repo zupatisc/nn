@@ -1,5 +1,6 @@
 #include "test_utils.h"
 
+#include "../tensor.h"
 #include "../layer_dense.h"
 #include "../activation_tanh.h"
 #include <assert.h>
@@ -23,6 +24,7 @@ static int test_layer_activation(void) {
 
     layer_dense_destroy(test_layer);
     activation_tanh_destroy(test_activation);
+    tensor_destroy(test_input);
 
     MSG_STOP;
     return EXIT_SUCCESS;

@@ -157,6 +157,9 @@ static int tensor_cmp_test(void) {
 
     assert(tensor_cmp(first_tensor, second_tensor) == true);
 
+    tensor_destroy(first_tensor);
+    tensor_destroy(second_tensor);
+
     MSG_STOP;
     return EXIT_SUCCESS;
 }
@@ -193,6 +196,7 @@ static int tensor_add_test(void) {
     tensor_destroy(bias_tensor);
     tensor_destroy(values_tensor);
     tensor_destroy(reference_tensor_outputs);
+    tensor_destroy(target_tensor);
 
     MSG_STOP;
     return EXIT_SUCCESS;
@@ -264,6 +268,10 @@ int sum_test(void) {
     assert(target_tensor_2->matrix[2][0] == 3);
     assert(target_tensor_2->matrix[3][0] == 3);
 
+    tensor_destroy(first_tensor);
+    tensor_destroy(target_tensor_1);
+    tensor_destroy(target_tensor_2);
+
     MSG_STOP;
     return EXIT_SUCCESS;
 }
@@ -310,6 +318,7 @@ static int tensor_pow_test(void) {
     tensor_destroy(first_tensor);
     // tensor_destroy(second_tensor);
     tensor_destroy(target_tensor);
+    tensor_destroy(reference_tensor_1);
 
     MSG_STOP;
     return EXIT_SUCCESS;

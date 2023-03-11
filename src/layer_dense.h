@@ -11,6 +11,9 @@
 
 typedef struct Layer_Dense Layer_Dense;
 
+/*
+ * Layers should only clean up objects they created
+ */
 struct Layer_Dense {
     /*
      * Forward pass

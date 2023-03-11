@@ -26,7 +26,7 @@ static int test_layer_dense(void) {
     layer_dense_destroy(test_layer);
 
     tensor_destroy(biases_reference);
-    // tensor_destroy(test_tensor);
+    tensor_destroy(test_tensor);
 
     MSG_STOP;
     return EXIT_SUCCESS;

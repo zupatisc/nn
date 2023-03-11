@@ -14,6 +14,9 @@ Activation_Tanh *activation_tanh_init(void) {
 }
 
 int activation_tanh_destroy(Activation_Tanh *activation_tanh) {
+    tensor_destroy(activation_tanh->output);
+    tensor_destroy(activation_tanh->dinputs);
+
     if (activation_tanh != NULL)
         free(activation_tanh);
 
