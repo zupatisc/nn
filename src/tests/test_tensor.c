@@ -324,6 +324,24 @@ static int tensor_pow_test(void) {
     return EXIT_SUCCESS;
 }
 
+int division_test(void) {
+    MSG_START;
+
+    Tensor *test_tensor = tensor_init(3, 4, 9);
+    Tensor *div_tensor = tensor_init(1, 1, 3);
+    Tensor *result_tensor = tensor_like(test_tensor, 3);
+
+    assert(tensor_div(test_tensor, test_tensor, div_tensor) == EXIT_SUCCESS);
+    assert(tensor_cmp(test_tensor, result_tensor) == true);
+
+    tensor_destroy(test_tensor);
+    tensor_destroy(div_tensor);
+    tensor_destroy(result_tensor);
+
+    MSG_STOP;
+    return EXIT_SUCCESS;
+}
+
 int main(void) {
     basic_test();
     tensor_add_test();
@@ -337,6 +355,7 @@ int main(void) {
     sum_test();
     tensor_mult_test();
     tensor_pow_test();
+    division_test();
 
     printf("Tensor Test success!\n\n");
 

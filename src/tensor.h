@@ -67,6 +67,9 @@ int tensor_sum(Tensor *tensor_trgt, Tensor *tensor_1, unsigned dim);
 // Elementwise multiplication
 int tensor_mult(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2);
 
+// Elementwise division
+int tensor_div(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2);
+
 // Elementwise power
 int tensor_pow(Tensor *tensor_trgt, Tensor *tensor_1, double exponent);
 
