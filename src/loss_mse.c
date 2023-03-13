@@ -21,6 +21,33 @@ int loss_mse_destroy(Loss_MSE *loss_mse) {
 
 Tensor *loss_mse_forward(Loss_MSE *loss_mse, Tensor *y_pred, Tensor *y_true) {
 
+    double scol = {y_pred->dim[0]};
+    double *scolp = &scol;
+    double **samples_cmatrix = {&scolp};
+    Tensor num_samples = {
+        .dim = {1, 1},
+        .matrix = samples_cmatrix,
+    };
+
+    double fcol = {0.5};
+    double *fcolp = &fcol;
+    double **flip_cmatrix = {&fcolp};
+    Tensor scalar = {
+        .dim = {1, 1},
+        .matrix = flip_cmatrix,
+    };
+
+    Tensor *tmp_tensor = tensor_like(y_pred, 0);
+    tensor_sub(tmp_tensor, y_pred, y_true);
+    tensor_pow(tmp_tensor, tmp_tensor, 2);
+
+    loss_mse->deviations = tensor_init(1, 1, 0);
+    tensor_sum(loss_mse->deviations, tmp_tensor, 0);
+    tensor_mult(loss_mse->deviations, loss_mse->deviations, &scalar);
+    tensor_div(loss_mse->deviations, loss_mse->deviations, &num_samples);
+
+    tensor_destroy(tmp_tensor);
+    return loss_mse->deviations;
 }
 
 int loss_mse_backward(Loss_MSE *loss_mse, Tensor *dvalues, Tensor *y_true) {

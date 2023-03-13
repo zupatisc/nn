@@ -48,14 +48,9 @@ bin/test_loss_mse: $(deps_test_loss_mse)
 clean:
 	rm bin/* obj/*
 
-memcheck: bin/test_tensor bin/test_layer_dense bin/test_activation_tanh bin/test_network
-	@$(foreach test,$^,valgrind --leak-check=yes ./$(test);)
-
-.PHONY: clean all tests print test_1
+.PHONY: clean all tests print
 
 -include $(DEPS)
-
-test_1: $(OBJECTS)
 
 print:
 	@echo $(OBJECTS)
