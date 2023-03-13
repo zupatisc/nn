@@ -28,9 +28,10 @@ int layer_dense_destroy(Layer_Dense *layer_dense) {
     tensor_destroy(layer_dense->output);
     // tensor_destroy(layer_dense->inputs);
 
-    // tensor_destroy(layer_dense->dinputs);
+    tensor_destroy(layer_dense->dinputs);
     tensor_destroy(layer_dense->dvalues);
     tensor_destroy(layer_dense->dweights);
+    tensor_destroy(layer_dense->dbiases);
 
     free(layer_dense);
 
@@ -80,6 +81,13 @@ int layer_dense_backward(Layer_Dense *layer_dense, Tensor *dvalues) {
      */
     Tensor *inputs_transp = tensor_transpose(layer_dense->inputs);
     Tensor *weights_transp = tensor_transpose(layer_dense->weights);
+
+    if (layer_dense->dweights == NULL)
+        layer_dense->dweights = tensor_like(layer_dense->weights, 0);
+    if (layer_dense->dbiases == NULL)
+        layer_dense->dbiases = tensor_like(layer_dense->biases, 0);
+    if (layer_dense->dinputs == NULL)
+        layer_dense->dinputs = tensor_like(layer_dense->inputs, 0);
 
     tensor_dot(layer_dense->dweights, inputs_transp, dvalues);
     tensor_sum(layer_dense->dbiases, dvalues, 0);
