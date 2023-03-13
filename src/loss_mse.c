@@ -52,7 +52,6 @@ Tensor *loss_mse_forward(Loss_MSE *loss_mse, Tensor *y_pred, Tensor *y_true) {
 
 int loss_mse_backward(Loss_MSE *loss_mse, Tensor *dvalues, Tensor *y_true) {
 
-    // Tensor *num_samples = tensor_init(1, 1, dvalues->dim[0]);
     /*
      * There is probably a fancy oneliner for this but this
      * is also just easier to step through and understand.
@@ -70,7 +69,6 @@ int loss_mse_backward(Loss_MSE *loss_mse, Tensor *dvalues, Tensor *y_true) {
     tensor_sub(loss_mse->dinputs, y_true, dvalues);
     tensor_div(loss_mse->dinputs, loss_mse->dinputs, &num_samples);
 
-    // Tensor *flip = tensor_init(1, 1, -1);
     /*
      * Same reason as above, the Tensor is static in size
      */

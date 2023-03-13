@@ -98,33 +98,34 @@ int tensor_add(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2) 
     if (tensor_trgt == NULL || tensor_1 == NULL || tensor_2 == NULL)
         return ETENNULL;
 
-    if (tensor_trgt->dim[0] != tensor_1->dim[0] || tensor_trgt->dim[1] != tensor_1->dim[1])
+    if ((tensor_1->dim[0] != tensor_trgt->dim[0] && tensor_1->dim[0] != 1) || 
+            (tensor_1->dim[1] != tensor_trgt->dim[1] && tensor_1->dim[1] != 1))
+        return ETENMIS;
+    if ((tensor_2->dim[0] != tensor_trgt->dim[0] && tensor_2->dim[0] != 1) || 
+            (tensor_2->dim[1] != tensor_trgt->dim[1] && tensor_2->dim[1] != 1))
         return ETENMIS;
 
-    unsigned ir = 0, ic = ir;
-    unsigned *ir2 = &ir;
-    unsigned *ic2 = &ic;
+
+    unsigned irt = 0, ict = irt;
+    unsigned *ir1 = &irt, *ic1 = &ict;
+    unsigned *ir2 = &irt, *ic2 = &ict;
     unsigned hold_dim = 0;
 
-    if (tensor_trgt->dim[0] != tensor_2->dim[0] || tensor_trgt->dim[1] != tensor_2->dim[1]) {
-        if (tensor_2->dim[0] == 1 && tensor_2->dim[1] != 1) {
-            puts("Dim 0 is 1"); //TODO: Remove printing
-            ir2 = &hold_dim;
-        } else if (tensor_2->dim[0] != 1 && tensor_2->dim[1] == 1) {
-            puts("Dim 1 is 1"); //TODO: Remove printing
-            ic2 = &hold_dim;
-        } else {
-            return ETENMIS;
-        }
-    }
+    if (tensor_1->dim[0] == 1)
+        ir1 = &hold_dim;
+    if (tensor_1->dim[1] == 1)
+        ic1 = &hold_dim;
+    if (tensor_2->dim[0] == 1)
+        ir2 = &hold_dim;
+    if (tensor_2->dim[1] == 1)
+        ic2 = &hold_dim;
 
-    for(; ir < tensor_trgt->dim[0]; ir++) {
-        for (; ic < tensor_trgt->dim[1]; ic++) {
-            tensor_trgt->matrix[ir][ic] = tensor_1->matrix[ir][ic] + tensor_2->matrix[*ir2][*ic2];
+    for (; irt < tensor_trgt->dim[0]; irt++) {
+        for (; ict < tensor_trgt->dim[1]; ict++) {
+            tensor_trgt->matrix[irt][ict] = tensor_1->matrix[*ir1][*ic1] + tensor_2->matrix[*ir2][*ic2];
         }
-        ic = 0;
+        ict = 0;
     }
-
     return EXIT_SUCCESS;
 }
 
