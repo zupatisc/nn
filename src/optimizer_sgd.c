@@ -30,7 +30,7 @@ int optimizer_sgd_update_params(Optimizer_SGD *optim, Layer_Dense *layer_dense) 
     if (!optim || !layer_dense)
         return EXIT_FAILURE;
 
-    double scol = {optim->current_learning_rate};
+    double scol = {-optim->current_learning_rate};
     double *scolp = &scol;
     double **lr_matrix = {&scolp};
     Tensor lr_tensor = {

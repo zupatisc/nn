@@ -38,3 +38,4 @@ deps_test_layer_dense=obj/test_layer_dense.o obj/layer_dense.o obj/tensor.o
 deps_test_activation_tanh=obj/test_activation_tanh.o obj/tensor.o obj/activation_tanh.o
 deps_test_network=obj/test_network.o obj/layer_dense.o obj/activation_tanh.o obj/tensor.o obj/loss_mse.o
 deps_test_loss_mse=obj/test_loss_mse.o obj/loss_mse.o obj/tensor.o
+deps_test_optimizer_sgd=obj/test_optimizer_sgd.o obj/tensor.o obj/layer_dense.o obj/optimizer_sgd.o
