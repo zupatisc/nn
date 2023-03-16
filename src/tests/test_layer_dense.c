@@ -122,6 +122,9 @@ static int double_forward_test(void) {
     tensor_destroy(reference_output);
     tensor_destroy(reference_output_2);
     tensor_destroy(reference_output_3);
+    tensor_destroy(input_tensor);
+    tensor_destroy(input_tensor_2);
+    tensor_destroy(input_tensor_3);
 
     MSG_STOP;
     return EXIT_SUCCESS;

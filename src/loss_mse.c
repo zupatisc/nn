@@ -41,7 +41,8 @@ Tensor *loss_mse_forward(Loss_MSE *loss_mse, Tensor *y_pred, Tensor *y_true) {
     tensor_sub(tmp_tensor, y_pred, y_true);
     tensor_pow(tmp_tensor, tmp_tensor, 2);
 
-    loss_mse->deviations = tensor_init(1, 1, 0);
+    if (loss_mse->deviations == NULL)
+        loss_mse->deviations = tensor_init(1, 1, 0);
     tensor_sum(loss_mse->deviations, tmp_tensor, 0);
     tensor_mult(loss_mse->deviations, loss_mse->deviations, &scalar);
     tensor_div(loss_mse->deviations, loss_mse->deviations, &num_samples);
@@ -65,7 +66,12 @@ int loss_mse_backward(Loss_MSE *loss_mse, Tensor *dvalues, Tensor *y_true) {
         .matrix = samples_cmatrix,
     };
 
-    loss_mse->dinputs = tensor_like(dvalues, 0);
+    if (loss_mse->dinputs == NULL) {
+        loss_mse->dinputs = tensor_like(dvalues, 0);
+    } else if (loss_mse->dinputs->dim[0] != dvalues->dim[0] || loss_mse->dinputs->dim[1] != dvalues->dim[1]) {
+        tensor_destroy(loss_mse->dinputs);
+        loss_mse->dinputs = tensor_like(dvalues, 0);
+    }
     tensor_sub(loss_mse->dinputs, y_true, dvalues);
     tensor_div(loss_mse->dinputs, loss_mse->dinputs, &num_samples);
 

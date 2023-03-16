@@ -6,7 +6,7 @@ include config.mk
 # $^ Outputs all prerequisites
 
 .DELETE_ON_ERROR:
-all: bin/nn tests
+all: tests bin/nn
 
 # Main binary
 # bin/$(TARGET_BINARIES): $(OBJECTS)
