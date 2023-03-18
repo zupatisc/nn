@@ -1,6 +1,7 @@
 // #include <stdlib.h>
 #include <stdio.h>
 
+#include "utils.h"
 #include "tensor.h"
 #include "layer_dense.h"
 #include "activation_tanh.h"
@@ -69,10 +70,20 @@ int sinus_network(void) {
     return EXIT_SUCCESS;
 }
 
+int test_read(void) {
+
+    Tensor *new_tensor = read_tensor("test.csv", 1);
+
+    tensor_print(new_tensor);
+
+    tensor_destroy(new_tensor);
+    return EXIT_SUCCESS;
+}
+
 int main(void) {
 
-    puts("Test");
-    sinus_network();
+    // sinus_network();
+    test_read();
 
     return EXIT_SUCCESS;
 }
