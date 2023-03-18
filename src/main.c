@@ -11,20 +11,9 @@
 #define NUM_DATA_POINTS 1000
 #define LOWER_BOUND 0.
 #define UPPER_BOUND 8.
-#define NUM_EPOCHS 10000
+#define NUM_EPOCHS 15000
 
 int sinus_network(void) {
-
-    /* unsigned data_points = NUM_DATA_POINTS;
-
-    Tensor *X = tensor_init(data_points, 1, 0);
-    for (unsigned i = 0; i < X->dim[0]; i++) {
-        X->matrix[i][0] = (i+1) * (UPPER_BOUND/data_points);
-    }
-    Tensor *Y = tensor_init(data_points, 1, 0);
-    for (unsigned i = 0; i < Y->dim[0]; i++) {
-        Y->matrix[i][0] = sin(X->matrix[i][0]);
-    } */
 
     Tensor *X = read_tensor("sin_data.csv", 0);
     Tensor *Y = read_tensor("sin_data.csv", 1);
@@ -108,9 +97,25 @@ int write_sin(void) {
     return EXIT_SUCCESS;
 }
 
+int test_read(void) {
+    // Tensor *X = read_tensor("sin_data.csv", 0);
+    Tensor *Y = read_tensor("sin_data.csv", 1);
+
+    /* puts("X Tensor");
+    tensor_print(X); */
+    puts("Y Tensor");
+    tensor_print(Y);
+
+    // tensor_destroy(X);
+    tensor_destroy(Y);
+
+    return EXIT_SUCCESS;
+}
+
 int main(void) {
 
     write_sin();
+    // test_read();
     sinus_network();
     /* test_read();
     test_write(); */

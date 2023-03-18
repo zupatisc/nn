@@ -12,7 +12,9 @@ int write_tensor(Tensor *tensor, char *file_name) {
 
     for (unsigned ic = 0; ic < tensor->dim[0]; ic++) {
         for (unsigned ir = 0; ir < tensor->dim[1]; ir++) {
-            fprintf(csv_file, "%f,", tensor->matrix[ic][ir]);
+            fprintf(csv_file, "%f", tensor->matrix[ic][ir]);
+            if (ir < (tensor->dim[1]-1))
+                fprintf(csv_file, ",");
         }
         fprintf(csv_file, "\n");
     }
@@ -43,12 +45,14 @@ Tensor *read_tensor(char *file_name, unsigned col) {
                     if (!tensor_buffer) return NULL;
                 }
 
-                if (file_buffer[i] == '\n')
-                    break;
                 if (file_buffer[i] == break_char)
                     c++;
 
-                if (c > col) {
+                if (file_buffer[i] == '\n') {
+                    tensor_buffer[it] = ' ';
+                    number_count++;
+                    break;
+                } else if (c > col) {
                     tensor_buffer[it] = ' ';
                     number_count++;
                     it++;
