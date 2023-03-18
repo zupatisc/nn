@@ -8,6 +8,9 @@
 
 #define BUFFER_SIZE 32
 
+/*
+ * Write tensor to CSV file
+ */
 int write_tensor(Tensor *tensor, char *file_name);
 
 /*

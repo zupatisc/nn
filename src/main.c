@@ -15,7 +15,7 @@
 
 int sinus_network(void) {
 
-    unsigned data_points = NUM_DATA_POINTS;
+    /* unsigned data_points = NUM_DATA_POINTS;
 
     Tensor *X = tensor_init(data_points, 1, 0);
     for (unsigned i = 0; i < X->dim[0]; i++) {
@@ -24,7 +24,10 @@ int sinus_network(void) {
     Tensor *Y = tensor_init(data_points, 1, 0);
     for (unsigned i = 0; i < Y->dim[0]; i++) {
         Y->matrix[i][0] = sin(X->matrix[i][0]);
-    }
+    } */
+
+    Tensor *X = read_tensor("sin_data.csv", 0);
+    Tensor *Y = read_tensor("sin_data.csv", 1);
 
     Layer_Dense *dense1 = layer_dense_init(1, 8);
     Activation_Tanh *activation1 = activation_tanh_init();
@@ -59,6 +62,22 @@ int sinus_network(void) {
 
     }
 
+    /*
+     * Single forward pass then combine X and y_pred
+     * and write to file
+     */
+    layer_dense_forward(dense1, X);
+    activation_tanh_forward(activation1, dense1->output);
+    layer_dense_forward(dense2, activation1->output);
+    Tensor *result_tensor = tensor_init(dense2->output->dim[0], 2, 0);
+    for (unsigned ic = 0; ic < result_tensor->dim[0]; ic++) {
+        result_tensor->matrix[ic][0] = X->matrix[ic][0];
+        result_tensor->matrix[ic][1] = dense2->output->matrix[ic][0];
+    }
+    write_tensor(result_tensor, "pred_sin_data.csv");
+    tensor_destroy(result_tensor);
+
+
     tensor_destroy(X);
     tensor_destroy(Y);
 
@@ -70,20 +89,31 @@ int sinus_network(void) {
     return EXIT_SUCCESS;
 }
 
-int test_read(void) {
+int write_sin(void) {
 
-    Tensor *new_tensor = read_tensor("test.csv", 1);
+    unsigned data_points = NUM_DATA_POINTS;
 
-    tensor_print(new_tensor);
+    Tensor *data_tensor = tensor_init(data_points, 2, 0);
 
-    tensor_destroy(new_tensor);
+    for (unsigned i = 0; i < data_tensor->dim[0]; i++) {
+        data_tensor->matrix[i][0] = (i+1) * (UPPER_BOUND/data_points);
+    }
+    for (unsigned i = 0; i < data_tensor->dim[0]; i++) {
+        data_tensor->matrix[i][1] = sin(data_tensor->matrix[i][0]);
+    }
+
+    write_tensor(data_tensor, "sin_data.csv");
+
+    tensor_destroy(data_tensor);
     return EXIT_SUCCESS;
 }
 
 int main(void) {
 
-    // sinus_network();
-    test_read();
+    write_sin();
+    sinus_network();
+    /* test_read();
+    test_write(); */
 
     return EXIT_SUCCESS;
 }
