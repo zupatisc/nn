@@ -30,12 +30,13 @@ DEPS := $(OBJECTS:.o=.d)
 # TARGET_BINARIES := test_tensor test_layer_dense
 
 # Dependencies for the main application
-deps_nn=obj/main.o obj/layer_dense.o obj/tensor.o obj/optimizer_sgd.o obj/loss_mse.o obj/activation_tanh.o obj/utils.o
+deps_nn=obj/main.o obj/layer_dense.o obj/tensor.o obj/optimizer_sgd.o obj/loss_mse.o obj/activation_tanh.o obj/utils.o obj/activation_relu.o
 
 # Dependencies for the tests
 deps_test_tensor=obj/test_tensor.o obj/tensor.o
 deps_test_layer_dense=obj/test_layer_dense.o obj/layer_dense.o obj/tensor.o
 deps_test_activation_tanh=obj/test_activation_tanh.o obj/tensor.o obj/activation_tanh.o
+deps_test_activation_relu=obj/test_activation_relu.o obj/tensor.o obj/activation_relu.o
 deps_test_network=obj/test_network.o obj/layer_dense.o obj/activation_tanh.o obj/tensor.o obj/loss_mse.o
 deps_test_loss_mse=obj/test_loss_mse.o obj/loss_mse.o obj/tensor.o
 deps_test_optimizer_sgd=obj/test_optimizer_sgd.o obj/tensor.o obj/layer_dense.o obj/optimizer_sgd.o

@@ -27,7 +27,7 @@ obj/%.o : src/tests/%.c
 
 
 # Tests
-tests: bin/test_tensor bin/test_layer_dense bin/test_activation_tanh bin/test_network bin/test_loss_mse bin/test_optimizer_sgd
+tests: bin/test_tensor bin/test_layer_dense bin/test_activation_tanh bin/test_network bin/test_loss_mse bin/test_optimizer_sgd bin/test_activation_relu
 	@$(foreach test,$^,./$(test);)
 
 bin/test_tensor: $(deps_test_tensor)
@@ -37,6 +37,9 @@ bin/test_layer_dense: $(deps_test_layer_dense)
 	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 bin/test_activation_tanh: $(deps_test_activation_tanh)
+	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
+
+bin/test_activation_relu: $(deps_test_activation_relu)
 	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 bin/test_network: $(deps_test_network)
