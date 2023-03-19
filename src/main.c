@@ -120,8 +120,8 @@ int xor_network(void) {
     }
     Tensor *Y = read_tensor("xor_data.csv", 2);
 
-    tensor_print(X);
-    tensor_print(Y);
+    /* tensor_print(X);
+    tensor_print(Y); */
 
     tensor_destroy(X_1);
     tensor_destroy(X_2);
@@ -233,8 +233,8 @@ int test_read(void) {
 
 int main(void) {
 
-    /* write_sin();
-    sinus_network(); */
+    write_sin();
+    sinus_network();
 
     write_xor();
     xor_network();

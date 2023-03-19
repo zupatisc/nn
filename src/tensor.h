@@ -39,8 +39,6 @@ Tensor *tensor_like(Tensor *tensor, double default_val);
 int tensor_destroy(Tensor *tensor);
 
 //Matrix multiplication/dot product
-//TODO: Broadcasting
-//TODO: Return new tensor if target is NULL
 int tensor_dot(Tensor *tensor_trgt, Tensor *tensor_1, Tensor *tensor_2);
 
 //Elementwise addition
@@ -73,7 +71,6 @@ int tensor_div(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2);
 // Elementwise power
 int tensor_pow(Tensor *tensor_trgt, Tensor *tensor_1, double exponent);
 
-//np.max(a, b)
 //iterate through tensor and check for conidtion
 //iterate through tensor and apply operation
 //Iterate through tensor in a flat manner and return value of item
