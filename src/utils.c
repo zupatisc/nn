@@ -51,6 +51,7 @@ Tensor *read_tensor(char *file_name, unsigned col) {
                 if (file_buffer[i] == '\n') {
                     tensor_buffer[it] = ' ';
                     number_count++;
+                    it++;
                     break;
                 } else if (c > col) {
                     tensor_buffer[it] = ' ';

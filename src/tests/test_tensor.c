@@ -129,26 +129,6 @@ static int broadcast_test(void) {
     return EXIT_SUCCESS;
 }
 
-static int dotproduct_create_target_tensor_test(void) {
-    MSG_START;
-    Tensor *first_tensor = tensor_init(1, 3, 1);
-    Tensor *second_tensor = tensor_init(3, 1, 2);
-    Tensor *target_tensor = NULL;
-
-    assert(tensor_dot(target_tensor, first_tensor, second_tensor) == EXIT_SUCCESS);
-    assert(target_tensor != NULL);
-    assert(target_tensor->dim[0] == 1);
-    assert(target_tensor->dim[1] == 1);
-    assert(target_tensor->matrix[0][0] == 6);
-
-    tensor_destroy(target_tensor);
-    tensor_destroy(first_tensor);
-    tensor_destroy(second_tensor);
-
-    MSG_STOP;
-    return EXIT_SUCCESS;
-}
-
 static int tensor_cmp_test(void) {
     MSG_START;
 

@@ -30,7 +30,7 @@ Tensor *tensor_rinit(unsigned int row, unsigned int col) {
     Tensor *new_tensor = tensor_init(row, col, 0);
 
     for (unsigned i = 0; i < new_tensor->dim[0] * new_tensor->dim[1]; i++) {
-        tensor_set(new_tensor, i, frand());
+        tensor_set(new_tensor, i, 0.01 * frand());
     }
 
     return new_tensor;
