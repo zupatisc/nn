@@ -15,8 +15,9 @@ The main binary `nn` implements two networks, one that is trained to emulate the
 ## Dependencies
 Generally a Linux system is assumed
 - GNU Make
-- Clang
-- Python3
+- Clang Compiler (if Clang is unavailable you can set the used compiler in `config.mk` to `gcc` or another C compiler of your choice)
+
+For generating the plot of the sin data you will also need Python3 with the matplotlib package installed.
 ## Compiling
 After setting the current working directory to the root directory of the project you may run `make` to compile the main binary `nn` which will be output to the `bin` folder. Running `make tests` will compile __and__ run all available tests. Since some changes in headers may not be directly picked up it may be neccessary to run `make clean` to delete any already build and linked objects in the `bin` or `obj` folders.
 
