@@ -233,11 +233,17 @@ int test_read(void) {
 
 int main(void) {
 
+    puts("Writing sin() data");
     write_sin();
+    puts("Starting sinus_network training");
     sinus_network();
+    puts("Finished sinus_network training");
 
+    puts("Writing xor() data");
     write_xor();
+    puts("Starting xor_network training");
     xor_network();
+    puts("Finished xor_network training");
 
     return EXIT_SUCCESS;
 }
