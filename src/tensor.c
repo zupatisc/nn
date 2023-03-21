@@ -4,15 +4,9 @@
 
 Tensor *tensor_init(unsigned int row, unsigned int col, double default_val) {
     double **matrix = malloc(row * sizeof *matrix);
-    if (matrix == NULL) {
-        //TODO: Error handling
-    }
 
     for (unsigned int i = 0; i < row; i++) {
          double *colp = malloc(col * sizeof *colp);
-         if (colp == NULL) {
-             //TODO: Error handling
-         }
          for (unsigned u = 0; u < col; u++)
              *(colp + u) = default_val;
          matrix[i] = colp;
@@ -41,7 +35,7 @@ Tensor *tensor_like(Tensor *tensor, double default_val) {
     return new_tensor;
 }
 
-int tensor_destroy(Tensor *tensor) { //TODO: return useful info
+int tensor_destroy(Tensor *tensor) {
     if (tensor) {
         for(unsigned i = 0; i < tensor->dim[0]; i++) {
             free(tensor->matrix[i]);
@@ -58,29 +52,9 @@ int tensor_dot(Tensor *tensor_trgt, Tensor *tensor_1, Tensor *tensor_2) {
     if (tensor_1 == NULL || tensor_2 == NULL || tensor_trgt == NULL)
         return ETENNULL;
 
-    // TODO: Do I really need broadcasting?
-    /* if (tensor_1->dim[1] != tensor_2->dim[1]) {
-        puts("dim 1 are unequal");
-        if (tensor_1->dim[1] == 1) {
-            puts("but tensor_1 dim 1 is 1");
-        } else if (tensor_2->dim[1] == 1) {
-            puts("but tensor_2 dim 1 is 1");
-            tensor_broadcast_T2d1(tensor_trgt, tensor_1, tensor_2);
-            return EXIT_SUCCESS;
-        }
-    } else if (tensor_1->dim[0] != tensor_2->dim[0]) {
-        puts("dim 0 are unequal");
-        if (tensor_1->dim[0] == 1) {
-            puts("but tensor_1 dim 0 is 1");
-        } else if (tensor_2->dim[0] == 1) {
-            puts("but tensor_2 dim 0 is 1");
-        }
-    } */
-
     if (tensor_trgt->dim[0] != tensor_1->dim[0] || tensor_trgt->dim[1] != tensor_2->dim[1])
         return ETENMIS;
 
-     //Taken from my python work
      for (unsigned ir = 0; ir < tensor_trgt->dim[0]; ir++) {
          for (unsigned ic = 0; ic < tensor_trgt->dim[1]; ic++) {
              double val = 0;

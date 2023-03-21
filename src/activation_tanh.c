@@ -53,7 +53,7 @@ int activation_tanh_backward(Activation_Tanh *activation_tanh, Tensor *dvalues) 
     if (activation_tanh->dinputs != NULL) {
         tensor_destroy(activation_tanh->dinputs);
     }
-    //TODO: Do this better?
+
     Tensor *temp_tensor = activation_tanh_tanh(activation_tanh->inputs);
     tensor_pow(temp_tensor, temp_tensor, 2);
     Tensor *dinputs = tensor_init(temp_tensor->dim[0], temp_tensor->dim[1], 1);

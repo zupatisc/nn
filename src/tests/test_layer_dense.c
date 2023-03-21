@@ -130,17 +130,16 @@ static int double_forward_test(void) {
     return EXIT_SUCCESS;
 }
 
-static int backward_test(void) {
+/* static int backward_test(void) {
     MSG_START;
-    // TODO: Test Backward function
     MSG_STOP;
     return EXIT_SUCCESS;
-}
+} */
 
 int main(void) {
     test_layer_dense();
     double_forward_test();
-    backward_test();
+    // backward_test(); // Forgotten and now network test does this anyway
 
     printf("Layer_Dense Test success!\n\n");
 

@@ -26,7 +26,6 @@ struct Tensor {
     double** matrix;
 };
 
-//Needed functions:
 //init with dimensions and default value
 Tensor *tensor_init(unsigned row, unsigned col, double default_val);
 
@@ -71,9 +70,7 @@ int tensor_div(Tensor *tensor_trgt, Tensor *tensor_1, Tensor*restrict tensor_2);
 // Elementwise power
 int tensor_pow(Tensor *tensor_trgt, Tensor *tensor_1, double exponent);
 
-//iterate through tensor and check for conidtion
-//iterate through tensor and apply operation
-//Iterate through tensor in a flat manner and return value of item
+// Used almost nowhere
 double tensor_iter(Tensor *tensor, unsigned iter);
 double tensor_set(Tensor *tensor, unsigned iter, double val);
 #endif

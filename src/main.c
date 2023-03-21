@@ -132,6 +132,16 @@ int xor_network(void) {
     Loss_MSE *loss_activation = loss_mse_init();
     Optimizer_SGD *optimizer = optimizer_sgd_init(0.05, 5e-7);
 
+    /*
+     * These are golden weights that I found
+     */
+    /* dense1->weights->matrix[0][0] = -0.86012272;
+    dense1->weights->matrix[0][1] = 0.88146238;
+    dense1->weights->matrix[1][0] = 0.85299183;
+    dense1->weights->matrix[1][1] = -0.88146547;
+
+    dense2->weights->matrix[0][0] = 1.17235342;
+    dense2->weights->matrix[1][0] = 1.13447835; */
 
     for (unsigned i = 0; i < NUM_EPOCHS_XOR; i++) {
 

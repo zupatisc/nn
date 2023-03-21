@@ -26,7 +26,6 @@ int layer_dense_destroy(Layer_Dense *layer_dense) {
     tensor_destroy(layer_dense->weights);
     tensor_destroy(layer_dense->biases);
     tensor_destroy(layer_dense->output);
-    // tensor_destroy(layer_dense->inputs);
 
     tensor_destroy(layer_dense->dinputs);
     tensor_destroy(layer_dense->dvalues);
@@ -52,13 +51,6 @@ int layer_dense_forward(Layer_Dense *layer_dense, Tensor *inputs) {
         tensor_destroy(layer_dense->output);
         layer_dense->output = tensor_init(inputs->dim[0], layer_dense->weights->dim[1], 0);
     }
-
-    /* if (layer_dense->inputs != NULL && layer_dense->inputs != inputs) { // Clear tensor if not NULL
-        tensor_destroy(layer_dense->inputs);
-        layer_dense->inputs = inputs;
-    } else if (layer_dense->inputs == NULL) {
-        layer_dense->inputs = inputs;
-    } */
 
     layer_dense->inputs = inputs;
     int rval = tensor_dot(layer_dense->output, inputs, layer_dense->weights);
