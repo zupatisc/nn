@@ -1,12 +1,12 @@
 # Program for compiling C programs; default CC
-CC=clang
+CC=musl-clang
 # Extra flags to give to the C compiler
 CFLAGS=-std=c17 -pedantic -Wall -Wno-deprecated-declarations -O2
-CFLAGS:=-fsanitize=address -fno-omit-frame-pointer -g $(CFLAGS)
+# CFLAGS:=-fsanitize=address -fno-omit-frame-pointer -g $(CFLAGS)
 # Extra flags to give to the C preprocessor
 # CPPFLAGS=
 # Extra flags to give to compilers when they are supposed to invoke the linker
-LDFLAGS=-lm -Wall -pedantic -fsanitize=address -fno-omit-frame-pointer -g
+LDFLAGS=-lm -fsanitize=address -fno-omit-frame-pointer -g
 
 SRC_DIR := ./src
 OBJ_DIR := ./obj

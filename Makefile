@@ -12,7 +12,7 @@ all: bin/nn
 # bin/$(TARGET_BINARIES): $(OBJECTS)
 # 	$(CC) $^ -o $@ $(LDFLAGS)
 bin/nn: $(deps_nn) | bin
-	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
+	/usr/bin/ld.musl-clang $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 
 # Object files

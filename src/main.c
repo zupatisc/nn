@@ -126,9 +126,9 @@ int xor_network(void) {
     tensor_destroy(X_1);
     tensor_destroy(X_2);
 
-    Layer_Dense *dense1 = layer_dense_init(2, 2);
+    Layer_Dense *dense1 = layer_dense_init(2, 4);
     Activation_ReLU *activation1 = activation_relu_init();
-    Layer_Dense *dense2 = layer_dense_init(2, 1);
+    Layer_Dense *dense2 = layer_dense_init(4, 1);
     Loss_MSE *loss_activation = loss_mse_init();
     Optimizer_SGD *optimizer = optimizer_sgd_init(0.05, 5e-7);
 
